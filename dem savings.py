@@ -12,7 +12,7 @@ directory = 'C:/Users/585000/Desktop/PCFSM/2017 KPIs/'
 #ADJUST: FILE NAME
 
 ### USE PAD COR not pad cor ppm
-matrix_file = 'PAD COR 4_17_17.csv'
+matrix_file = 'PAD COR 7_24_17.csv'
 dem_per_day = 100
 dat = pd.read_csv(directory+matrix_file)
 
@@ -44,7 +44,7 @@ def calc_rates(dat,years = ['2017']):
     dat = dat[dat['Managed By - Project'] != 'SCMS']
     dat = dat[dat['Order Short Closed'] != "Yes"]
     dat = dat[dat['Current Shipment Milestone'] == 'D1']
-
+    dat = dat[dat['Shipment Mode'] == 'Ocean']
     dat['year'] = dat['Delivery Recorded Year - Month'].str[:4]
     pattern = '|'.join(years)
     dat['year'] = dat['year'].fillna('')
@@ -65,26 +65,7 @@ def calc_rates(dat,years = ['2017']):
         del dat2
     dat = dat_sub.copy()
     del dat_sub
-    #2016
-    #country_list = ['Mozambique', 'Tanzania', 'Uganda', 'Nigeria', 'Malawi', 'Ghana',
-    #                'Zimbabwe', 'Zambia', 'Guinea', "C\xf4te d'Ivoire"]
 
-    #2015
-    #country_list = ['Mozambique', 'Tanzania', 'Uganda', 'Nigeria', 'Malawi', 'Ghana', 'Cameroon',
-    #                    'Zimbabwe', 'Zambia', "C\xf4te d'Ivoire"]
-
-    #pattern = '|'.join(country_list)
-    #dat['Ship To Country Name'] = dat['Ship To Country Name'].fillna('')
-    #dat = dat[dat['Ship To Country Name'].str.contains(pattern)]
-
-    #dat = pd.DataFrame(dat.groupby(['Ship To Country Name'])['FB Weight',
-    #                                 ].sum().reset_index())
-
-    #result = dat.sort(['FB Weight'], ascending=[0])
-    #result.head(10)
-
-
-    # IMPORT DATES
     '''
     Import Waiver Requested Date
     Import Waiver Received Date
@@ -129,7 +110,7 @@ def calc_rates(dat,years = ['2017']):
                  'cost_w_free_days': np.sum}
 
     dat = pd.DataFrame(
-        dat.groupby(['Ship To Country Name', 'Order Pick Up Country Name', 'Shipment Mode']).agg(agg_funcs).reset_index().reset_index())
+        dat.groupby(['Ship To Country Name', 'Order Pick Up Country Name','Shipment Mode']).agg(agg_funcs).reset_index().reset_index())
 
     dat2 = pd.DataFrame()
     dat2['Ship To Country Name'] = dat['Ship To Country Name']
@@ -166,11 +147,11 @@ def calc_rates(dat,years = ['2017']):
 
 
 #at = dat[dat['Ship To Country Name']=='Nigeria']
-dat_2016 = calc_rates(dat,['2016','2017'])
+dat_2016 = calc_rates(dat,['2017'])
 
 #pd.DataFrame([dat_2016['Shipment Mode'],dat_2016['FB Weight']['size']])
 #dat_2017 = calc_rates(dat,2017)
 
-dat_2016.to_csv('C:/Users/585000/Desktop/PCFSM/dem_savings_2016_v6_w_costs.csv')
+dat_2016.to_csv('C:/Users/585000/Desktop/PCFSM/dem_savings_2017_v1_w_costs.csv')
 #dat_2017.to_csv('C:/Users/585000/Desktop/PCFSM/dem_savings_2017_v1.csv')
 

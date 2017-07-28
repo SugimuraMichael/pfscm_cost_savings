@@ -21,7 +21,7 @@ directory = 'C:/Users/585000/Desktop/PCFSM/2017 KPIs/'
 #ADJUST: FILE NAME
 
 ### USE PAD COR not pad cor ppm
-matrix_file = 'PAD COR 4_17_17.csv'
+matrix_file = 'PAD COR 7_28_17.csv'
 dem_per_day = 100
 dat = pd.read_csv(directory+matrix_file)
 

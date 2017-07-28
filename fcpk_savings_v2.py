@@ -23,7 +23,7 @@ directory = 'C:/Users/585000/Desktop/PCFSM/2017 KPIs/'
 #ADJUST: FILE NAME
 
 ### USE PAD COR not pad cor ppm
-matrix_file = 'PAD COR 7_14_17.csv'
+matrix_file = 'PAD COR 7_28_17.csv'
 
 save_loc = 'C:/Users/585000/Desktop/PCFSM/cost_saving/'
 dat = pd.read_csv(directory+matrix_file)
@@ -197,5 +197,13 @@ def calculate_savings(dat,base_year = 2016,comparison_year = 2017,comparison_per
 test1 = calculate_savings(dat,base_year = 2016,comparison_year = 2017,comparison_period='qtr')
 
 
-save_loc = 'C:/Users/585000/Desktop/PCFSM/cost_saving/'
-test1.to_csv(save_loc+'savings_'+matrix_file,index=False)
+#save_loc = 'C:/Users/585000/Desktop/PCFSM/cost_saving/'
+#test1.to_csv(save_loc+'savings_qtr_'+matrix_file,index=False)
+
+
+
+dat = pd.read_csv('C:/Users/585000/Desktop/PCFSM/cost_saving/2017_Q1_cost savings.csv')
+
+result = pd.merge(test1,dat,on='id',how='left',indicator=True)
+result.to_csv(save_loc+'savings_qtr_COMPARE_'+matrix_file,index=False)
+
